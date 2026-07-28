@@ -145,6 +145,24 @@ document.querySelectorAll(".cap-tab").forEach((tab) => {
   });
 });
 
+const copyFeedback = document.querySelector(".copy-feedback");
+document.querySelectorAll("[data-copy]").forEach((copyButton) => {
+  copyButton.addEventListener("click", async () => {
+    const platform = copyButton.querySelector("small").textContent.split("/")[1].trim();
+    try {
+      await navigator.clipboard.writeText(copyButton.dataset.copy);
+      copyButton.querySelector(".copy-label").firstChild.textContent = "COPIED ";
+      copyFeedback.textContent = `${platform} name copied to clipboard`;
+      window.setTimeout(() => {
+        copyButton.querySelector(".copy-label").firstChild.textContent = "COPY ";
+        copyFeedback.textContent = "";
+      }, 2400);
+    } catch {
+      copyFeedback.textContent = `${platform}: ${copyButton.dataset.copy}`;
+    }
+  });
+});
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
