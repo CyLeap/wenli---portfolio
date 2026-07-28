@@ -1,0 +1,10 @@
+node_modules/
+dist/
+
+.DS_Store
+Thumbs.db
+*.log
+
+desktop-verified.png
+mobile-verified.png
+*-verified.png
