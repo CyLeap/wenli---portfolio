@@ -32,7 +32,7 @@ const translations = {
     j1Title: "Japanese IT Pathway", j1Body: "AUPP × NEXTMAKE × MPTC program combining Japanese language, workplace communication, and practical IT training toward JLPT N3.",
     j2Title: "Student Experience Speaker", j2Body: "Represented and shared practical learning experiences with students at the Cambodia Academy of Digital Technology.",
     j3Title: "Cambodia at UNODC", j3Body: "Participated in regional dialogue on cybercrime and digital safety, connecting product work with the human impact of online scam operations.",
-    contactEyebrow: "Open channel", contactTitle: "Let’s build something<br />worth trusting.", contactBody: "For security research, product collaboration, speaking, or opportunities across Cambodia and beyond.", backTop: "BACK TO TOP ↑"
+    contactEyebrow: "Open channel", contactTitle: "Let’s build something<br />worth trusting.", contactBody: "For security research, product collaboration, speaking, or opportunities across Cambodia and beyond.", backTop: "BACK TO TOP ^"
   },
   ja: {
     navProfile: "プロフィール", navProof: "実績", navProjects: "プロジェクト", navWriteups: "技術記事", navStack: "スキル", navContact: "連絡先",
@@ -67,7 +67,7 @@ const translations = {
     j1Title: "Japanese IT Pathway", j1Body: "AUPP × NEXTMAKE × MPTCによる、日本語、職場コミュニケーション、実践ITをJLPT N3に向けて学ぶプログラム。",
     j2Title: "学生経験スピーカー", j2Body: "CADTの学生に向けて、実践的な学習経験を代表として共有しました。",
     j3Title: "UNODCでカンボジア代表", j3Body: "サイバー犯罪とデジタルセーフティの地域対話に参加し、製品開発とオンライン詐欺の人的影響を結びつけました。",
-    contactEyebrow: "連絡先", contactTitle: "信頼できるものを、<br />一緒につくろう。", contactBody: "セキュリティ研究、製品協業、講演、カンボジア国内外の機会について。", backTop: "トップへ ↑"
+    contactEyebrow: "連絡先", contactTitle: "信頼できるものを、<br />一緒につくろう。", contactBody: "セキュリティ研究、製品協業、講演、カンボジア国内外の機会について。", backTop: "トップへ ^"
   },
   zh: {
     navProfile: "简介", navProof: "成就", navProjects: "项目", navWriteups: "靶场笔记", navStack: "技能", navContact: "联系",
@@ -102,7 +102,7 @@ const translations = {
     j1Title: "日本IT人才路径项目", j1Body: "AUPP × NEXTMAKE × MPTC联合项目，结合日语、职场沟通与实用IT培训，目标达到JLPT N3。",
     j2Title: "学生经验分享嘉宾", j2Body: "代表学生在柬埔寨数字技术学院分享实际学习与成长经验。",
     j3Title: "代表柬埔寨参与UNODC活动", j3Body: "参与网络犯罪与数字安全区域对话，将产品实践与网络诈骗对人的影响联系起来。",
-    contactEyebrow: "开放联系", contactTitle: "一起打造<br />值得信赖的产品。", contactBody: "欢迎就安全研究、产品合作、演讲或柬埔寨及国际机会与我联系。", backTop: "返回顶部 ↑"
+    contactEyebrow: "开放联系", contactTitle: "一起打造<br />值得信赖的产品。", contactBody: "欢迎就安全研究、产品合作、演讲或柬埔寨及国际机会与我联系。", backTop: "返回顶部 ^"
   }
 };
 
