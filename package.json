@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "generate:writeups": "node scripts/generate-writeups.mjs",
+    "dev": "npm run generate:writeups && vite --host 0.0.0.0",
+    "build": "npm run generate:writeups && vite build",
     "preview": "vite preview --host 0.0.0.0"
   },
   "devDependencies": {

@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#080a08" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b7ff2a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E%E6%96%87%3C/text%3E%3C/svg%3E" />
-    <meta
-      name="description"
-      content="Thay Bunleap's cybersecurity, software, AI, and Business portfolio."
-    />
-    <title>johnathann / Thay Bunleap</title>
+    <meta name="description" content="Thay Bunleap's cybersecurity portfolio featuring secure software projects, Komnot, international achievements, and Hack The Box writeups by wenli #KH." />
+    <meta name="keywords" content="Thay Bunleap, wenli, cybersecurity Cambodia, Komnot, Hack The Box writeups, secure software development, penetration testing labs" />
+    <meta name="author" content="Thay Bunleap" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://johnathann.site/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="wenli | Thay Bunleap Cybersecurity Portfolio" />
+    <meta property="og:description" content="Cybersecurity projects, startup work, achievements, and authorized HTB lab writeups by Thay Bunleap." />
+    <meta property="og:url" content="https://johnathann.site/" />
+    <meta property="og:image" content="https://johnathann.site/assets/wenli-anime.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>wenli | Thay Bunleap Cybersecurity Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,6 +24,23 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Thay Bunleap",
+        "alternateName": ["wenli", "Johnathann"],
+        "url": "https://johnathann.site/",
+        "image": "https://johnathann.site/assets/thay-bunleap.jpg",
+        "jobTitle": "Cybersecurity Student and Startup Founder",
+        "sameAs": [
+          "https://app.hackthebox.com/users/3032704",
+          "https://www.linkedin.com/in/thay-bunleap-938a39329/",
+          "https://www.instagram.com/leapnleap/"
+        ],
+        "knowsAbout": ["Cybersecurity", "Secure Software Development", "Cloud Infrastructure", "Artificial Intelligence", "Hack The Box"]
+      }
+    </script>
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
@@ -31,6 +55,7 @@
         <a href="#profile" data-i18n="navProfile">Profile</a>
         <a href="#proof" data-i18n="navProof">Proof</a>
         <a href="#projects" data-i18n="navProjects">Projects</a>
+        <a href="#writeups" data-i18n="navWriteups">Writeups</a>
         <a href="#capabilities" data-i18n="navStack">Stack</a>
         <a href="#contact" data-i18n="navContact">Contact</a>
       </nav>
@@ -71,7 +96,7 @@
           </div>
         </div>
         <div class="hero-index" aria-hidden="true">
-          <span>01</span><i></i><span>06</span>
+          <span>01</span><i></i><span>07</span>
         </div>
         <div class="hero-meta">
           <span>PHNOM PENH · KH</span>
@@ -102,7 +127,7 @@
               <div><dt data-i18n="based">Based</dt><dd>Phnom Penh, Cambodia</dd></div>
               <div><dt data-i18n="focus">Focus</dt><dd data-i18n="focusValue">Cybersecurity · AI · Product</dd></div>
               <div><dt data-i18n="languages">Languages</dt><dd>Khmer · English · 日本語 · 中文</dd></div>
-              <div><dt data-i18n="current">Current</dt><dd data-i18n="currentValue">Cybersecurity student / NEXTMAKE</dd></div>
+              <div><dt data-i18n="current">Current</dt><dd data-i18n="currentValue">Cybersecurity student / Komnot founder</dd></div>
             </dl>
           </div>
         </div>
@@ -321,9 +346,40 @@
         </div>
       </section>
 
+      <section class="writeups-feature section" id="writeups">
+        <div class="writeups-feature-head reveal">
+          <div>
+            <div class="section-number">06 / AUTHORIZED LAB NOTES</div>
+            <p class="eyebrow" data-i18n="writeupsEyebrow">Hack The Box writeups</p>
+            <h2 data-i18n="writeupsTitle">Method, documented.<br />Evidence, repeatable.</h2>
+          </div>
+          <div class="writeups-feature-intro">
+            <p data-i18n="writeupsIntro">Structured records of reconnaissance, exploitation, privilege escalation, and defensive lessons from legal Hack The Box environments.</p>
+            <a class="button primary" href="/writeups/"><span data-i18n="viewAllWriteups">View all writeups</span><span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="writeup-preview-list reveal">
+          <a href="/writeups/cap-htb/">
+            <span class="writeup-preview-code">W/01</span>
+            <span><strong>Cap</strong><small>IDOR / PCAP analysis / Linux capabilities</small></span>
+            <i aria-hidden="true">↗</i>
+          </a>
+          <a href="/writeups/twomillion-htb/">
+            <span class="writeup-preview-code">W/02</span>
+            <span><strong>TwoMillion</strong><small>API authorization / Command injection / OverlayFS</small></span>
+            <i aria-hidden="true">↗</i>
+          </a>
+          <a href="/writeups/">
+            <span class="writeup-preview-code">W/08</span>
+            <span><strong data-i18n="viewAllWriteups">View all writeups</strong><small>2 PUBLIC / 6 HELD UNTIL RETIREMENT</small></span>
+            <i aria-hidden="true">↗</i>
+          </a>
+        </div>
+      </section>
+
       <section class="journey section" id="journey">
         <div class="journey-title reveal">
-          <div class="section-number">06 / CROSS-BORDER</div>
+          <div class="section-number">07 / CROSS-BORDER</div>
           <p class="eyebrow" data-i18n="journeyEyebrow">Learning beyond code</p>
           <h2 data-i18n="journeyTitle">Cambodia,<br />connected.</h2>
         </div>

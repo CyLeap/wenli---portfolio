@@ -1,5 +1,6 @@
 node_modules/
 dist/
+writeups/machines.private.mjs
 
 .DS_Store
 Thumbs.db
