@@ -79,6 +79,17 @@ img { display: block; max-width: 100%; }
 .fact dt { color: var(--muted); font: 8px "IBM Plex Mono", monospace; text-transform: uppercase; }
 .fact dd { margin: 9px 0 0; overflow-wrap: anywhere; color: var(--paper); font-size: 12px; }
 .layout { width: min(1280px, 100%); margin: 0 auto; padding: 80px var(--pad) 120px; display: grid; grid-template-columns: 240px minmax(0, 850px); gap: clamp(45px, 8vw, 110px); justify-content: center; }
+.embargo-layout { display: block; padding-top: 80px; }
+.embargo-panel { min-height: 470px; padding: clamp(38px, 6vw, 82px); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(50px, 8vw, 120px); border-top: 1px solid var(--acid); border-bottom: 1px solid var(--line); background: var(--ink-2); }
+.embargo-heading h2 { max-width: 610px; margin: 18px 0 0; font-size: clamp(52px, 7vw, 104px); line-height: .92; }
+.embargo-copy { align-self: center; }
+.embargo-copy > p { max-width: 680px; margin: 0 0 18px; color: var(--muted); font-size: clamp(16px, 1.5vw, 20px); line-height: 1.8; }
+.embargo-facts { margin: 34px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.embargo-fact { min-width: 0; padding: 20px 16px; border-right: 1px solid var(--line); }
+.embargo-fact:last-child { border-right: 0; }
+.embargo-fact span { display: block; color: var(--muted); font: 8px "IBM Plex Mono", monospace; text-transform: uppercase; }
+.embargo-fact strong { display: block; margin-top: 9px; overflow-wrap: anywhere; color: var(--paper); font: 11px "IBM Plex Mono", monospace; text-transform: uppercase; }
+.embargo-copy .share { margin-top: 34px; }
 .toc { position: sticky; top: 100px; align-self: start; border-top: 1px solid var(--acid); }
 .toc-title { padding: 16px 0; color: var(--acid); font: 9px "IBM Plex Mono", monospace; text-transform: uppercase; }
 .toc ol { margin: 0; padding: 0; list-style: none; }
@@ -120,7 +131,6 @@ code .prompt { color: var(--acid); }
 .spoiler-overlay small { display: block; margin-top: 10px; color: var(--silver); line-height: 1.6; }
 .spoiler-shell.revealed .spoiler-content { filter: none; user-select: auto; }
 .spoiler-shell.revealed .spoiler-overlay { display: none; }
-.screenshot-placeholder { min-height: 190px; margin: 24px 0; display: grid; place-items: center; border: 1px dashed #465040; color: var(--muted); background: repeating-linear-gradient(135deg, transparent 0 14px, rgba(183,255,42,.025) 14px 28px); font: 9px "IBM Plex Mono", monospace; text-align: center; }
 .flag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .flag { padding: 24px; border: 1px solid var(--line); background: #0b0e0b; }
 .flag span { color: var(--muted); font: 8px "IBM Plex Mono", monospace; text-transform: uppercase; }
@@ -161,6 +171,8 @@ footer { min-height: 110px; padding: 30px var(--pad); display: flex; align-items
   .toc { position: static; }
   .toc ol { display: grid; grid-template-columns: 1fr 1fr; }
   .toc a { padding-right: 12px; }
+  .embargo-panel { grid-template-columns: 1fr; gap: 38px; }
+  .embargo-heading h2 { max-width: 760px; }
 }
 @media (max-width: 620px) {
   .site-header { width: 100%; min-height: 62px; padding: 0 16px; gap: 12px; }
@@ -181,6 +193,13 @@ footer { min-height: 110px; padding: 30px var(--pad); display: flex; align-items
   .fact-grid { width: calc(100% - 40px); grid-template-columns: 1fr 1fr; }
   .fact:nth-child(odd) { border-left: 1px solid var(--line); }
   .layout { padding: 60px 20px 90px; }
+  .embargo-layout { padding-top: 50px; }
+  .embargo-panel { min-height: 0; padding: 34px 0; gap: 30px; }
+  .embargo-heading h2 { font-size: clamp(44px, 14vw, 68px); }
+  .embargo-copy > p { font-size: 15px; }
+  .embargo-facts { grid-template-columns: 1fr; }
+  .embargo-fact { border-right: 0; border-bottom: 1px solid var(--line); }
+  .embargo-fact:last-child { border-bottom: 0; }
   .toc ol { grid-template-columns: 1fr; }
   .article-section { padding-bottom: 60px; }
   .port-table { display: block; overflow-x: auto; }
@@ -258,6 +277,7 @@ function renderEmbargoedMachine(machine) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080a08" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b7ff2a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E%E6%96%87%3C/text%3E%3C/svg%3E" />
   <title>${escapeHtml(machine.name)} HTB Writeup | wenli Cybersecurity Portfolio</title>
   <meta name="description" content="${escapeHtml(description)}" />
   <meta name="author" content="wenli #KH" />
@@ -286,13 +306,22 @@ function renderEmbargoedMachine(machine) {
       <div class="hero-copy"><div class="breadcrumb"><a href="/writeups/">Writeups</a> / ${escapeHtml(machine.slug)}</div><h1>${escapeHtml(machine.name)}</h1><p class="hero-subtitle">Hack The Box machine notes by wenli #KH</p><div class="badge-row"><span class="badge easy">${escapeHtml(machine.status)}</span><span class="badge">${escapeHtml(machine.os)}</span><span class="badge retired">Publication held</span></div></div>
       <div class="hero-mark" aria-hidden="true">${escapeHtml(machine.name.slice(0, 2).toUpperCase())}</div>
     </section>
-    <div class="layout">
+    <div class="layout embargo-layout">
       <article id="article">
-        <section class="article-section"><span class="section-kicker">PUBLICATION EMBARGO</span><h2>Notes held until retirement.</h2><p>Hack The Box permits public walkthroughs only for officially retired content. This route is reserved, but reconnaissance, exploitation steps, credentials, and proof paths will remain private until the machine is confirmed as retired.</p><p>For now, the portfolio shows only completion context and links to my HTB profile.</p><div class="share"><a class="header-link primary" href="${htbProfile}" target="_blank" rel="noreferrer">View wenli #KH on HTB</a><a class="header-link" href="/writeups/">Browse public writeups</a></div></section>
+        <section class="article-section embargo-panel">
+          <div class="embargo-heading"><span class="section-kicker">PUBLICATION EMBARGO</span><h2>Notes held until retirement.</h2></div>
+          <div class="embargo-copy">
+            <p>Hack The Box permits public walkthroughs only for officially retired content. Reconnaissance, exploitation steps, credentials, and proof paths will remain private until this machine is confirmed as retired.</p>
+            <p>The route is already prepared and will become a complete writeup after retirement.</p>
+            <div class="embargo-facts"><div class="embargo-fact"><span>Machine</span><strong>${escapeHtml(machine.name)}</strong></div><div class="embargo-fact"><span>Current status</span><strong>${escapeHtml(machine.status)}</strong></div><div class="embargo-fact"><span>Publication</span><strong>Held</strong></div></div>
+            <div class="share"><a class="header-link primary" href="${htbProfile}" target="_blank" rel="noreferrer">View wenli #KH on HTB</a><a class="header-link" href="/writeups/">Browse public writeups</a></div>
+          </div>
+        </section>
       </article>
     </div>
   </main>
   <footer><span>© 2026 THAY BUNLEAP / WENLI</span><span>AUTHORIZED LAB DOCUMENTATION</span></footer>
+  <script type="module" src="/analytics.js"></script>
 </body>
 </html>`;
 }
@@ -307,18 +336,15 @@ function renderMachine(machine, index) {
   const cveTags = machine.cves.length ? machine.cves : ["No named CVE"];
   const enumerationDetail = `
     ${list(machine.enumeration.findings, "finding-list")}
-    ${machine.enumeration.commands.map(codeBlock).join("")}
-    <div class="screenshot-placeholder">SCREENSHOT PLACEHOLDER / ENUMERATION EVIDENCE</div>`;
+    ${machine.enumeration.commands.map(codeBlock).join("")}`;
   const footholdDetail = `
     <p>${escapeHtml(machine.foothold.body)}</p>
     ${list(machine.foothold.steps, "step-list")}
-    ${machine.foothold.commands.map(codeBlock).join("")}
-    <div class="screenshot-placeholder">SCREENSHOT PLACEHOLDER / FOOTHOLD EVIDENCE</div>`;
+    ${machine.foothold.commands.map(codeBlock).join("")}`;
   const postDetail = `
     <p>${escapeHtml(machine.post.body)}</p>
     ${list(machine.post.steps, "step-list")}
-    ${machine.post.commands.map(codeBlock).join("")}
-    <div class="screenshot-placeholder">SCREENSHOT PLACEHOLDER / PRIVILEGE ESCALATION EVIDENCE</div>`;
+    ${machine.post.commands.map(codeBlock).join("")}`;
   const flagsDetail = `
     <div class="flag-grid">
       <div class="flag"><span>User proof</span><strong>••••••••••••••••</strong><code>${escapeHtml(machine.userPath)}</code></div>
@@ -342,6 +368,7 @@ function renderMachine(machine, index) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080a08" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b7ff2a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E%E6%96%87%3C/text%3E%3C/svg%3E" />
   <title>${escapeHtml(machine.name)} HTB Writeup | wenli Cybersecurity Portfolio</title>
   <meta name="description" content="${escapeHtml(description)}" />
   <meta name="keywords" content="${escapeHtml(keywords)}" />
@@ -453,6 +480,7 @@ function renderMachine(machine, index) {
   </main>
   <footer><span>© 2026 THAY BUNLEAP / WENLI</span><span>AUTHORIZED LAB DOCUMENTATION</span></footer>
   <script>${articleScript}</script>
+  <script type="module" src="/analytics.js"></script>
 </body>
 </html>`;
 }
@@ -478,6 +506,7 @@ function renderIndex() {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080a08" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b7ff2a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E%E6%96%87%3C/text%3E%3C/svg%3E" />
   <title>HTB Writeups | wenli Cybersecurity Portfolio</title>
   <meta name="description" content="${escapeHtml(description)}" />
   <meta name="keywords" content="Hack The Box writeups, HTB Cambodia, wenli, cybersecurity portfolio, penetration testing labs" />
@@ -503,6 +532,7 @@ function renderIndex() {
     <section class="writeup-list" aria-label="Machine writeups">${machines.map((machine, index) => `<a class="writeup-row" href="/writeups/${machine.slug}/"><span class="number">${String(index + 1).padStart(2, "0")}</span><div><h2>${escapeHtml(machine.name)}</h2><p>${isRetired(machine) ? escapeHtml(machine.techniques.join(" / ")) : "Detailed notes publish after official retirement"}</p></div><div class="writeup-meta"><span class="badge easy">${escapeHtml(machine.status)}</span><span class="badge">${isRetired(machine) ? escapeHtml(machine.os) : "Held"}</span></div></a>`).join("")}</section>
   </main>
   <footer><span>© 2026 THAY BUNLEAP / WENLI</span><span>AUTHORIZED LAB DOCUMENTATION</span></footer>
+  <script type="module" src="/analytics.js"></script>
 </body>
 </html>`;
 }

@@ -10,6 +10,7 @@ Personal portfolio for Thay Bunleap, focused on cybersecurity, software engineer
 |-- index.html       Page structure and content
 |-- style.css        Visual system, layouts, and responsive styles
 |-- main.js          Translations and browser interactions
+|-- analytics.js     Vercel Web Analytics initialization
 |-- writeups/        HTB writeup content and generated standalone pages
 |-- scripts/         Static writeup page generator
 |-- public/          Search-engine discovery files
@@ -52,6 +53,8 @@ npm run preview
 `style.css` contains the design tokens, desktop layouts, responsive breakpoints, and motion preferences.
 
 `main.js` contains the English, Japanese, and Chinese translations. It also manages navigation, language persistence, capability tabs, and scroll reveal behavior.
+
+`analytics.js` injects Vercel Web Analytics on the portfolio, writeup index, and every generated writeup page. Tracking activates on the deployed Vercel site and remains inactive during normal local development.
 
 `writeups/machines.mjs` is the structured source for the HTB lab notes. `npm run generate:writeups` produces one complete, standalone HTML document for every machine and refreshes the sitemap and robots file.
 

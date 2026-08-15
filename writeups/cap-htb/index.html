@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080a08" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b7ff2a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E%E6%96%87%3C/text%3E%3C/svg%3E" />
   <title>Cap HTB Writeup | wenli Cybersecurity Portfolio</title>
   <meta name="description" content="Hack The Box Cap writeup by wenli #KH. Retired Linux / Ubuntu lab covering IDOR, PCAP analysis, Linux capabilities." />
   <meta name="keywords" content="HTB Cap, Hack The Box writeup, wenli, penetration testing, IDOR, PCAP analysis, Linux capabilities" />
@@ -87,6 +88,17 @@ img { display: block; max-width: 100%; }
 .fact dt { color: var(--muted); font: 8px "IBM Plex Mono", monospace; text-transform: uppercase; }
 .fact dd { margin: 9px 0 0; overflow-wrap: anywhere; color: var(--paper); font-size: 12px; }
 .layout { width: min(1280px, 100%); margin: 0 auto; padding: 80px var(--pad) 120px; display: grid; grid-template-columns: 240px minmax(0, 850px); gap: clamp(45px, 8vw, 110px); justify-content: center; }
+.embargo-layout { display: block; padding-top: 80px; }
+.embargo-panel { min-height: 470px; padding: clamp(38px, 6vw, 82px); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(50px, 8vw, 120px); border-top: 1px solid var(--acid); border-bottom: 1px solid var(--line); background: var(--ink-2); }
+.embargo-heading h2 { max-width: 610px; margin: 18px 0 0; font-size: clamp(52px, 7vw, 104px); line-height: .92; }
+.embargo-copy { align-self: center; }
+.embargo-copy > p { max-width: 680px; margin: 0 0 18px; color: var(--muted); font-size: clamp(16px, 1.5vw, 20px); line-height: 1.8; }
+.embargo-facts { margin: 34px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.embargo-fact { min-width: 0; padding: 20px 16px; border-right: 1px solid var(--line); }
+.embargo-fact:last-child { border-right: 0; }
+.embargo-fact span { display: block; color: var(--muted); font: 8px "IBM Plex Mono", monospace; text-transform: uppercase; }
+.embargo-fact strong { display: block; margin-top: 9px; overflow-wrap: anywhere; color: var(--paper); font: 11px "IBM Plex Mono", monospace; text-transform: uppercase; }
+.embargo-copy .share { margin-top: 34px; }
 .toc { position: sticky; top: 100px; align-self: start; border-top: 1px solid var(--acid); }
 .toc-title { padding: 16px 0; color: var(--acid); font: 9px "IBM Plex Mono", monospace; text-transform: uppercase; }
 .toc ol { margin: 0; padding: 0; list-style: none; }
@@ -128,7 +140,6 @@ code .prompt { color: var(--acid); }
 .spoiler-overlay small { display: block; margin-top: 10px; color: var(--silver); line-height: 1.6; }
 .spoiler-shell.revealed .spoiler-content { filter: none; user-select: auto; }
 .spoiler-shell.revealed .spoiler-overlay { display: none; }
-.screenshot-placeholder { min-height: 190px; margin: 24px 0; display: grid; place-items: center; border: 1px dashed #465040; color: var(--muted); background: repeating-linear-gradient(135deg, transparent 0 14px, rgba(183,255,42,.025) 14px 28px); font: 9px "IBM Plex Mono", monospace; text-align: center; }
 .flag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .flag { padding: 24px; border: 1px solid var(--line); background: #0b0e0b; }
 .flag span { color: var(--muted); font: 8px "IBM Plex Mono", monospace; text-transform: uppercase; }
@@ -169,6 +180,8 @@ footer { min-height: 110px; padding: 30px var(--pad); display: flex; align-items
   .toc { position: static; }
   .toc ol { display: grid; grid-template-columns: 1fr 1fr; }
   .toc a { padding-right: 12px; }
+  .embargo-panel { grid-template-columns: 1fr; gap: 38px; }
+  .embargo-heading h2 { max-width: 760px; }
 }
 @media (max-width: 620px) {
   .site-header { width: 100%; min-height: 62px; padding: 0 16px; gap: 12px; }
@@ -189,6 +202,13 @@ footer { min-height: 110px; padding: 30px var(--pad); display: flex; align-items
   .fact-grid { width: calc(100% - 40px); grid-template-columns: 1fr 1fr; }
   .fact:nth-child(odd) { border-left: 1px solid var(--line); }
   .layout { padding: 60px 20px 90px; }
+  .embargo-layout { padding-top: 50px; }
+  .embargo-panel { min-height: 0; padding: 34px 0; gap: 30px; }
+  .embargo-heading h2 { font-size: clamp(44px, 14vw, 68px); }
+  .embargo-copy > p { font-size: 15px; }
+  .embargo-facts { grid-template-columns: 1fr; }
+  .embargo-fact { border-right: 0; border-bottom: 1px solid var(--line); }
+  .embargo-fact:last-child { border-bottom: 0; }
   .toc ol { grid-template-columns: 1fr; }
   .article-section { padding-bottom: 60px; }
   .port-table { display: block; overflow-x: auto; }
@@ -295,8 +315,7 @@ PORT   STATE SERVICE NOTES
 capinfos capture.pcap
 tcpdump -A -r capture.pcap 'tcp port 21'
 tshark -r capture.pcap -Y ftp.request -T fields -e ftp.request.command -e ftp.request.arg</code></pre>
-  </div>
-    <div class="screenshot-placeholder">SCREENSHOT PLACEHOLDER / ENUMERATION EVIDENCE</div></div>
+  </div></div>
     <button class="spoiler-overlay" type="button" aria-expanded="false">
       <span><strong>SPOILER - Reveal enumeration evidence</strong><small>Authorized Hack The Box lab notes for learning purposes only.</small></span>
     </button>
@@ -316,8 +335,7 @@ tshark -r capture.pcap -Y ftp.request -T fields -e ftp.request.command -e ftp.re
 # USER nathan
 # PASS Buck3tH4TF0RM3!
 ssh nathan@cap.htb</code></pre>
-  </div>
-    <div class="screenshot-placeholder">SCREENSHOT PLACEHOLDER / FOOTHOLD EVIDENCE</div></div>
+  </div></div>
     <button class="spoiler-overlay" type="button" aria-expanded="false">
       <span><strong>SPOILER - Click to reveal</strong><small>Authorized Hack The Box lab notes for learning purposes only.</small></span>
     </button>
@@ -337,8 +355,7 @@ ssh nathan@cap.htb</code></pre>
 /usr/bin/python3.8 -c 'import os; os.setuid(0); os.system(&quot;/bin/bash&quot;)'
 id
 cat /root/root.txt</code></pre>
-  </div>
-    <div class="screenshot-placeholder">SCREENSHOT PLACEHOLDER / PRIVILEGE ESCALATION EVIDENCE</div></div>
+  </div></div>
     <button class="spoiler-overlay" type="button" aria-expanded="false">
       <span><strong>SPOILER - Click to reveal</strong><small>Authorized Hack The Box lab notes for learning purposes only.</small></span>
     </button>
@@ -397,5 +414,6 @@ document.querySelectorAll('pre code').forEach((code) => {
   code.innerHTML = lines.join('\n');
 });
 </script>
+  <script type="module" src="/analytics.js"></script>
 </body>
 </html>
